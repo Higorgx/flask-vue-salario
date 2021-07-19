@@ -23,16 +23,20 @@
         <hr>
       <div class="col-8">
          <b-form-group
-            label="Insira Sua Nota e clique em Enviar ou adicione -1 como nota
-            para executar as operações"
+            label="Insira seu salario hora e suas horas trabalhadas"
             label-for="input-formatter"
-            description="(apenas numeros reais!)"
             class="mb-0"
           >
             <b-form-input
-              id="addNota"
+              id="addSalario"
               v-model="number"
-              placeholder=""
+              placeholder="Salario Hora"
+            ></b-form-input>
+            <br>
+            <b-form-input
+              id="addHoras"
+              v-model="number"
+              placeholder="Horas Trabalhadas"
             ></b-form-input>
           </b-form-group>
               <div class="float-right">
@@ -40,12 +44,7 @@
                   class="btn btn-success
                   mt-5 mr-3 btn-lg"
                   v-on:click.stop.prevent = addNotas
-                  >adicionar Nova Nota</button>
-                  <button type="reset"
-                  class="btn btn-warning
-                  mt-5 mr-2 btn-lg"
-                  v-on:click.stop.prevent = postNumbers
-                  >Enviar</button>
+                  >Calcular!</button>
               </div>
             </div>
        </div>
