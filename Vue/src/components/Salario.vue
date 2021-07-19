@@ -4,12 +4,13 @@
       <div v-if="this.questFinish == true">
         <h3 class="text-center">Resultado</h3>
             <div class="container my-5">
-              <h4>Numeros inseridos: {{this.numbers}}</h4>
-              <h4>Ordem inversa: {{this.inversa}}</h4>
-              <h4>Soma: {{this.sum}}</h4>
-              <h4>Média: {{this.media}}</h4>
-              <h4>Valores superiores a média: {{this.acimaMedia}}</h4>
-              <h4>Valores inferiores a 7: {{this.abaixo7}}</h4>
+              <h4>salario Hora : {{this.salario}}</h4>
+              <h4>Horas Trabalhadas: {{this.horasTrab}}</h4>
+              <h4>salario Bruto: {{this.bruto}}</h4>
+              <h4>INSS: {{this.inss}}</h4>
+              <h4>Imposto de Renda: {{this.renda}}</h4>
+              <h4>salario Liquido: {{this.salarioLiquido}}</h4>
+              <h4>sindicato: {{this.sindicato}}</h4>
                 <button type="button"
                   class="btn btn-primary
                   mt-5 mr-3 btn-lg"
@@ -28,22 +29,22 @@
             class="mb-0"
           >
             <b-form-input
-              id="addSalario"
-              v-model="number"
-              placeholder="Salario Hora"
-            ></b-form-input>
+              id="addsalario"
+              v-model="salario"
+              placeholder="salarioa Horaa">
+              </b-form-input>
             <br>
             <b-form-input
               id="addHoras"
-              v-model="number"
-              placeholder="Horas Trabalhadas"
+              v-model="horasTrab"
+              placeholder="Horas Trabalhadas a "
             ></b-form-input>
           </b-form-group>
               <div class="float-right">
                   <button type="button"
                   class="btn btn-success
                   mt-5 mr-3 btn-lg"
-                  v-on:click.stop.prevent = addNotas
+                  v-on:click.stop.prevent = postNumbers
                   >Calcular!</button>
               </div>
             </div>
@@ -57,47 +58,35 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      numbers: [],
-      number: null,
-      result: [],
-      inversa: [],
-      sum: 0,
-      media: 0,
-      acimaMedia: 0,
-      abaixo7: 0,
+      salario: '',
+      horasTrab: '',
+      inss: '',
+      renda: '',
+      sindicato: '',
+      salarioLiquido: '',
       questFinish: false,
       questStart: true,
     };
   },
   methods: {
-    addNotas() {
-      const num = parseInt(this.number, 10);
-      if (Number.isNaN(num)) {
-        window.alert('Insira um valor!');
-      } else if (num < -1) {
-        this.number = null;
-        window.alert('Insira um valor positivo!');
-      } else if (num === -1) {
-        this.postNumbers();
-      } else {
-        this.numbers.push(num);
-        this.number = null;
-      }
-    },
     postNumbers() {
-      const path = 'http://localhost:5000/numbers';
+      const path = 'http://localhost:5000/salario';
+      this.salario = parseInt(this.salario, 10);
+      this.horasTrab = parseInt(this.horasTrab, 10);
       const payload = {
-        numbers: this.numbers,
+        salario: this.salario,
+        horasTrab: this.horasTrab,
       };
       axios.post(path, payload)
         .then((res) => {
-          this.result = res.data;
-          this.inversa = res.data.inversa;
-          this.sum = res.data.sum;
-          this.media = res.data.media;
-          this.acimaMedia = res.data.acimaMedia;
-          this.abaixo7 = res.data.abaixo7;
-          console.log('foi');
+          console.log(this.bruto);
+          this.salario = res.salario;
+          this.horasTrab = res.horasTrab;
+          this.bruto = res.bruto;
+          this.inss = res.data.inss;
+          this.renda = res.data.renda;
+          this.sindicato = res.data.sindicato;
+          this.salarioLiquido = res.data.salarioLiquido;
           this.questFinished();
         })
         .catch((error) => {

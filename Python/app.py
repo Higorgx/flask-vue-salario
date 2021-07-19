@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-salarioHora = 0
+salario = 0
 horasTrab = 0
 
 DEBUG = True
@@ -13,33 +13,34 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/salario', methods=['GET'])
 def get_result():
-    response_object2 = {'status': 'success'}
-    response_object2['Hora trabalhadas'] = horasTrab
     response_object = {'status': 'success'}
-    response_object['salario Hora'] = horasTrab
-    return jsonify(response_object, response_object2)
+    response_object = {
+        'horasTrab': horasTrab,
+        'salario': salario,
+    }
+    return jsonify(response_object)
 
 @app.route('/salario', methods=['POST'])
 def post_numbers():
     post_data = request.get_json()
-    salarioHora = post_data.get("salarioHora")
+    salario = post_data.get("salario")
     horasTrab = post_data.get("horasTrab")
-
-    print(salarioHora)
+    print(salario)
     print(horasTrab)
-
-    salarioBruto = salarioHora * horasTrab
-    inss = salarioBruto * 0.08
-    impostoDeRenda = salarioBruto * 0.11
-    sindicato = salarioBruto * 0.05
-    salarioLiquido = salarioBruto - inss - impostoDeRenda - sindicato
+    bruto = salario * horasTrab
+    inss = bruto * 0.08
+    impostoDeRenda = bruto * 0.11
+    sindicato = bruto * 0.05
+    salarioLiquido = bruto - inss - impostoDeRenda - sindicato
 
     response_object = {
-        'Bruto': salarioBruto,
+        'salario': salario,
+        'horasTrab': horasTrab,
+        'bruto': bruto,
         'inss': inss,
         'renda': impostoDeRenda,
         'sindicato': sindicato,
-        'salarioLiquido': salarioLiquido
+        'salarioLiquido': salarioLiquido,
     }
 
     return jsonify(response_object)
