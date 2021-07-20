@@ -4,13 +4,13 @@
       <div v-if="this.questFinish == true">
         <h3 class="text-center">Resultado</h3>
             <div class="container my-5">
-              <h4>salario Hora : {{this.salario}}</h4>
+              <h4>Salário Hora : {{this.salario}}</h4>
               <h4>Horas Trabalhadas: {{this.horasTrab}}</h4>
-              <h4>salario Bruto: {{this.bruto}}</h4>
+              <h4>Salário Bruto: {{this.bruto}}</h4>
               <h4>INSS: {{this.inss}}</h4>
               <h4>Imposto de Renda: {{this.renda}}</h4>
-              <h4>salario Liquido: {{this.salarioLiquido}}</h4>
-              <h4>sindicato: {{this.sindicato}}</h4>
+              <h4>Salário Líquido: {{this.salarioLiquido}}</h4>
+              <h4>Sindicato: {{this.sindicato}}</h4>
                 <button type="button"
                   class="btn btn-primary
                   mt-5 mr-3 btn-lg"
@@ -24,7 +24,7 @@
         <hr>
       <div class="col-8">
          <b-form-group
-            label="Insira seu sálario hora e suas horas trabalhadas"
+            label="Insira seu salário hora e suas horas trabalhadas"
             label-for="input-formatter"
             class="mb-0"
           >
