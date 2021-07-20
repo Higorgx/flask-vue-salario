@@ -24,27 +24,29 @@
         <hr>
       <div class="col-8">
          <b-form-group
-            label="Insira seu salario hora e suas horas trabalhadas"
+            label="Insira seu sálario hora e suas horas trabalhadas"
             label-for="input-formatter"
             class="mb-0"
           >
             <b-form-input
+              type="number"
               id="addsalario"
               v-model="salario"
-              placeholder="salarioa Horaa">
+              placeholder="Salário Hora">
               </b-form-input>
             <br>
             <b-form-input
+              type="number"
               id="addHoras"
               v-model="horasTrab"
-              placeholder="Horas Trabalhadas a "
+              placeholder="Horas Trabalhadas"
             ></b-form-input>
           </b-form-group>
               <div class="float-right">
                   <button type="button"
                   class="btn btn-success
                   mt-5 mr-3 btn-lg"
-                  v-on:click.stop.prevent = postNumbers
+                  v-on:click.stop.prevent = testes
                   >Calcular!</button>
               </div>
             </div>
@@ -80,9 +82,9 @@ export default {
       axios.post(path, payload)
         .then((res) => {
           console.log(this.bruto);
-          this.salario = res.salario;
-          this.horasTrab = res.horasTrab;
-          this.bruto = res.bruto;
+          this.salario = res.data.salario;
+          this.horasTrab = res.data.horasTrab;
+          this.bruto = res.data.bruto;
           this.inss = res.data.inss;
           this.renda = res.data.renda;
           this.sindicato = res.data.sindicato;
@@ -95,6 +97,21 @@ export default {
           console.log(error);
         });
       this.finished = true;
+    },
+    testes() {
+      this.salario = parseInt(this.salario, 10);
+      this.horasTrab = parseInt(this.horasTrab, 10);
+      if (Number.isNaN(this.horasTrab) || Number.isNaN(this.salario)) {
+        window.alert('Insira um valor!');
+        this.horasTrab = null;
+        this.salario = null;
+      } else if (this.horasTrab <= 0 || this.salario <= 0) {
+        window.alert('Insira um valor positivo!');
+        this.horasTrab = null;
+        this.salario = null;
+      } else {
+        this.postNumbers();
+      }
     },
     questFinished() {
       this.questFinish = true;
